@@ -1,0 +1,33 @@
+<h1 class="text-center mt-2 mb-4">L&G TODO LIST</h1>
+
+<% if @items.empty? %>
+  <%# If the items array is empty, make user aware with a card %>
+  <div class="card w-75 mx-auto">
+    <div class="card-header text-center">
+      <p class="card-text">No Items...</p>
+    </div>
+  </div>
+<% else %>
+  <%# Otherwise, list all items as clickable links %>
+  <div class="list-group mb-3">
+    <%# Goes thru each item and creates a clickable list-group-item link %>
+    <% @items.each do |item| %>
+      <div class="position-relative">
+      <%= link_to archive_toggle_items_path(item_id: item.id), class: "archive-toggle" do %>
+        <span><i class="bi-<%= item.archived ? 'check-square-fill' : 'square' %>"></i></span>
+      <% end %>
+      <%= link_to item, class: "#{item.archived ? 'list-group-item task-done' : 'list-group-item task-undone'} d-flex justify-content-between list-group-item list-group-item-action py-3" do %>
+        <span class="ms-4 <%= item.archived ? 'text-decoration-line-through' : '' %>"><%= item.title %></span>
+        <span class="<%= item.archived ? 'text-decoration-line-through' : '' %>">Due: <%= item.due_date.strftime("%_m-%d-%y") %></span>
+      <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<%# New item form rendered in a card %>
+<div class="card w-100 mx-auto text-white bg-secondary">
+  <div class="card-body">
+    <%= render "form", item: Item.new %>
+  </div>
+</div>

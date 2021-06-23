@@ -1,0 +1,8 @@
+<div class="card w-75 mx-auto mb-1 text-white bg-dark">
+  <div class="card-body">
+    <p class="card-text"><%= simple_format(note.body) %></p>
+    <div class="text-center">
+      <%= link_to 'Delete', [note.item, note], method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+    </div>
+  </div>
+</div>

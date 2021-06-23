@@ -1,0 +1,37 @@
+<%# Adds a back button at the bottom that takes user back to root page %>
+<div class="container text-center">
+  <%= link_to "<<<", root_path, class: 'btn btn-dark' %>
+</div>
+
+<%# Display the item and give the option to edit and delete it %>
+<div class="card w-100 mt-3 mb-3 mx-auto text-white bg-secondary">
+  <div class="card-header fs-5 fw-bold py-3 text-center">
+    <%= @item.title %>
+  </div>
+  <div class="card-body mb-1">
+    <p class="card-text"><%= simple_format(@item.description) %></p>
+    <div class="text-center mb-4">
+      <%= link_to "Edit", edit_item_path(@item), class: 'btn btn-primary px-4 mx-1' %>
+      <%= link_to "Delete", item_path(@item), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger mx-1' %>
+    </div>
+    <%# Check if there are any notes for this item %>
+    <% if @item.notes.empty? %>
+      <%# If the notes array is empty, make user aware with a card %>
+      <div class="card w-75 mx-auto mb-1 text-white bg-dark">
+        <div class="card-header text-center">
+          <p class="card-text">No notes...</p>
+        </div>
+      </div>
+    <% else %>
+      <%# Renders each note one by one using the partial expansion feature %>
+      <%= render @item.notes %>
+    <% end %>
+
+    <%# New note form rendered in a card %>
+    <div class="card w-75 mx-auto mb-2 text-white bg-dark">
+      <div class="card-body">
+        <%= render "notes/form" %>
+      </div>
+    </div>
+  </div>
+</div>
